@@ -145,7 +145,14 @@ date_default_timezone_set("America/Los_Angeles");
 					$this->session->set_flashdata('login_error_msg','<p>Email is not registered in the system. Please register to login.<p>');
 					redirect('/users/login_view');
 				}
-				elseif ($this->input->post('password')==$user_by_email['password'])
+				
+				if($this->input->post('password')!=$user_by_email['password'])
+				{
+					$this->session->set_flashdata('login_error_msg','<p>Incorrect password.<p>');
+					redirect('/users/login_view');
+				}
+
+				if ($this->input->post('password')==$user_by_email['password'])
 				{
 					$this->session->set_userdata('login',TRUE);
 					$this->session->set_userdata('user_info',$user_by_email);
